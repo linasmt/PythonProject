@@ -7,3 +7,6 @@
 # charger_tableau: Cette fonction chargera le tableau de probabilité à partir du fichier enregistré.
 # generer_mot: Cette fonction générera un mot en utilisant le tableau de probabilité chargé.
 # Un script principal qui utilise les fonctions précédentes pour charger la liste de mots, établir le tableau de probabilité, enregistrer le tableau, charger le tableau et générer des mots.
+
+
+# 

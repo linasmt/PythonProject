@@ -1,7 +1,11 @@
+from collections import defaultdict
 from lecture_dico import Dictionnaire
 
 
 class Occurrence:
+    alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+                'u', 'v', 'w', 'x', 'y', 'z', 'é', 'è', 'à', 'ù', 'û', 'ô', 'â', 'î', 'ï', '-']
+
     def __init__(self):
         mon_dictionnaire = Dictionnaire()
         self.dico = mon_dictionnaire.ouvrir_fichier()
@@ -44,3 +48,30 @@ class Occurrence:
         for i in range(len(self.array_word) - 1):
             paires.append((self.array_word[i], self.array_word[i + 1]))
         return paires
+
+    def next_letters(self, paires):
+        tableau_lettres = defaultdict(list)
+        for pair in paires:
+            first_letter, second_letter = pair
+            tableau_lettres[first_letter].append(second_letter)
+
+        result = {}
+        for key, value in tableau_lettres.items():
+            lettre_suivante_counts = []
+            total_occurrences = len(value)
+            for item in sorted(set(value)):
+                count = value.count(item)
+                percentage = (count / total_occurrences) * 100
+                lettre_suivante_counts.append(f"{count} x '{item}' ({percentage:.2f}%)")
+            result[key] = lettre_suivante_counts
+
+        return result
+
+
+if __name__ == "__main__":
+    occurrence = Occurrence()
+    occurrence.occurrence_letter()
+    paires = occurrence.diviser_en_paires()
+    tableau_lettres_suivantes = occurrence.next_letters(paires)
+    for key, value in sorted(tableau_lettres_suivantes.items()):
+        print(f"{key.upper()} = {value}")
