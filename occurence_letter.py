@@ -49,6 +49,30 @@ class Occurrence:
             paires.append((self.array_word[i], self.array_word[i + 1]))
         return paires
 
+    def get_percetage_first_letter(self):
+        array = []
+        for mot in self.dico:
+            array.append(mot[0])
+        for letter in self.alphabet:
+            total_letter = array.count(letter)
+            total_letters = len(array)
+            if total_letter != 0:
+                percentage = (total_letter / total_letters) * 100
+                print(f"{letter} : {total_letter} - {percentage:.2f}%")
+
+
+    def get_percetage_last_letter(self):
+        array = []
+        for mot in self.dico:
+            array.append(mot[-1])
+        for letter in self.alphabet:
+            total_letter = array.count(letter)
+            total_letters = len(array)
+            if total_letter != 0:
+                percentage = (total_letter / total_letters) * 100
+                print(f"{letter} : {total_letter} - {percentage:.2f}%")
+
+
     def next_letters(self, paires):
         tableau_lettres = defaultdict(list)
         for pair in paires:
