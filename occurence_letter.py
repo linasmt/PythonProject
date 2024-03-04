@@ -43,7 +43,7 @@ class Occurrence:
             print(f"{letter} : {total_letter} - {percentage:.2f}%")
 
 
-    def diviser_en_paires(self):
+    def split_into_pairs(self):
         paires = []
         for i in range(len(self.array_word) - 1):
             paires.append((self.array_word[i], self.array_word[i + 1]))
@@ -74,20 +74,20 @@ class Occurrence:
 
 
     def next_letters(self, paires):
-        tableau_lettres = defaultdict(list)
+        array_letters = defaultdict(list)
         for pair in paires:
             first_letter, second_letter = pair
-            tableau_lettres[first_letter].append(second_letter)
+            array_letters[first_letter].append(second_letter)
 
         result = {}
-        for key, value in tableau_lettres.items():
-            lettre_suivante_counts = []
+        for key, value in array_letters.items():
+            next_letters_counts = []
             total_occurrences = len(value)
             for item in sorted(set(value)):
                 count = value.count(item)
                 percentage = (count / total_occurrences) * 100
-                lettre_suivante_counts.append(f"{count} x '{item}' ({percentage:.2f}%)")
-            result[key] = lettre_suivante_counts
+                next_letters_counts.append(f"{count} x '{item}' ({percentage:.2f}%)")
+            result[key] = next_letters_counts
 
         return result
 
@@ -95,7 +95,7 @@ class Occurrence:
 if __name__ == "__main__":
     occurrence = Occurrence()
     occurrence.occurrence_letter()
-    paires = occurrence.diviser_en_paires()
-    tableau_lettres_suivantes = occurrence.next_letters(paires)
-    for key, value in sorted(tableau_lettres_suivantes.items()):
+    paires = occurrence.split_into_pairs()
+    array_next_letters = occurrence.next_letters(paires)
+    for key, value in sorted(array_next_letters.items()):
         print(f"{key.upper()} = {value}")
