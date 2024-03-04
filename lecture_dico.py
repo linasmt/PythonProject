@@ -1,8 +1,11 @@
 class Dictionnaire:
     def ouvrir_fichier(self):
         try:
-            contenu = open('liste_francais.txt', 'r').read()
-            mots = contenu.split()
+            with open('liste_francais.txt', 'r') as f:
+                contenu = f.read()
+                mots = contenu.split()
+                for mot in mots:
+                    print(mot)
             return mots
         except Exception as e:
             print(f"Une erreur s'est produite : {e}")
