@@ -1,8 +1,8 @@
-from occurence_letter import Occurence
+from occurence_letter import Occurrence
 
 def main():
-    occurence = Occurence()
-    occurence.occurence_letter()
+    occurence = Occurrence()
+    occurence.occurrence_letter()
 
 
 main()

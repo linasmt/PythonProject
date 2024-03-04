@@ -3,8 +3,7 @@ class Dictionnaire:
         try:
             contenu = open('liste_francais.txt', 'r').read()
             mots = contenu.split()
-            print(mots)
+            return mots
         except Exception as e:
             print(f"Une erreur s'est produite : {e}")
-
-
+            return []
