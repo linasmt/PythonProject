@@ -1,44 +1,38 @@
 import random
-
 from occurence_letter import Occurrence
 
 class MotGenerator:
     def __init__(self):
         self.occurence = Occurrence()
-        self.dico = self.occurence.dico
-        self.alphabet = self.occurence.alphabet
         self.alphabet = self.occurence.alphabet
         self.array_proba_debut = self.occurence.get_percentage_first_letter()
         self.array_proba_fin = self.occurence.get_percentage_last_letter()
         self.array_proba_nextletter = self.occurence.next_letters()
 
-    def generer_mot(self, longueur_mot, nb_mots):
+    def choisir_lettre(self, probas):
+        poids_normalises = [prob / sum(probas) for prob in probas]
+        return random.choices(self.alphabet, weights=poids_normalises)[0]
 
+    def generer_mot(self, longueur_mot, nb_mots):
         array_words = []
-        if longueur_mot <= 0:
-            return ""
 
         for _ in range(nb_mots):
-            # Choisir la première lettre en fonction du pourcentage_debut
-            premiere_lettre = random.choices(self.alphabet, weights=self.array_proba_debut)[0]
-            mot = premiere_lettre
+            mot = ""
+            premiere_lettre = self.choisir_lettre(self.array_proba_debut)
+            mot += premiere_lettre
 
-            # Choisir les lettres suivantes en fonction du pourcentage_suivant
-            for _ in range(1, longueur_mot - 1):
+            for _ in range(longueur_mot - 2):
                 lettre_actuelle = mot[-1]
-                if lettre_actuelle in self.array_proba_nextletter:
-                    poids_suivant = self.array_proba_nextletter[lettre_actuelle]
-                    # Assurez-vous que la somme des poids est égale à 1
-                    poids_suivant = [p / sum(poids_suivant) for p in poids_suivant]
-                    lettre_suivante = random.choices(self.alphabet, weights=poids_suivant)[0]
+                poids_suivant = self.array_proba_nextletter.get(lettre_actuelle, [])
+                if poids_suivant:
+                    lettre_suivante = self.choisir_lettre(poids_suivant)
                     mot += lettre_suivante
                 else:
-                    # Gérer le cas où la lettre actuelle n'a pas de pourcentage_suivant défini
                     print(f"Aucun pourcentage_suivant défini pour '{lettre_actuelle}'")
                     break
 
-            # Choisir la dernière lettre en fonction du pourcentage_fin
-            derniere_lettre = random.choices(self.alphabet, weights=self.array_proba_fin)[0]
+            derniere_lettre = self.choisir_lettre(self.array_proba_fin)
             mot += derniere_lettre
             array_words.append(mot)
+
         return array_words
