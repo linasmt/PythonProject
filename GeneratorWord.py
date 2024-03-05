@@ -13,8 +13,7 @@ class MotGenerator:
         self.array_proba_nextletter = self.occurence.next_letters()
 
     def generer_mot(self, longueur):
-        print(self.array_proba_nextletter)
-        return
+
         if longueur <= 0:
             return ""
 

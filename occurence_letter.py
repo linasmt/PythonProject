@@ -49,23 +49,29 @@ class Occurrence:
         return paire
 
     def get_percentage_first_letter(self):
+
         array = [mot[0] for mot in self.dico]
+        total_letters = len(array)
+        self.array_proba_debut = []
         for letter in self.alphabet:
+
             total_letter = array.count(letter)
-            total_letters = len(array)
-            if total_letter != 0:
-                percentage = (total_letter / total_letters) * 100
-                self.array_proba_debut.append(round(percentage, 2))
+            percentage = (total_letter / total_letters) * 100
+            self.array_proba_debut.append(round(percentage, 2))
+
         return self.array_proba_debut
 
     def get_percentage_last_letter(self):
         array = [mot[-1] for mot in self.dico]
+        total_letters = len(array)
+
+        self.array_proba_fin = []
+
         for letter in self.alphabet:
             total_letter = array.count(letter)
-            total_letters = len(array)
-            if total_letter != 0:
-                percentage = (total_letter / total_letters) * 100
-                self.array_proba_fin.append(round(percentage, 2))
+            percentage = (total_letter / total_letters) * 100
+            self.array_proba_fin.append(round(percentage, 2))
+
         return self.array_proba_fin
 
     def next_letters(self):
@@ -76,7 +82,7 @@ class Occurrence:
                 tableau_lettres[first_letter].append(second_letter)
             else:
                 first_letter = pair
-                tableau_lettres[first_letter].append('NaN')
+                tableau_lettres[first_letter].append(first_letter)
 
         result = {}
 
@@ -89,14 +95,13 @@ class Occurrence:
                 if letter in unique_values:
                     count = value.count(letter)
                     percentage = round((count / total_occurrences) * 100, 2)
-                    next_letters_counts.append((letter, percentage))
+                    next_letters_counts.append(percentage)
                 else:
-                    next_letters_counts.append((letter, 0.0))
+                    next_letters_counts.append(0.0)
 
             result[key] = next_letters_counts
 
         return result
-
 
 if __name__ == "__main__":
     occurrence = Occurrence()
