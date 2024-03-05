@@ -4,7 +4,7 @@ from word import Word
 
 def main():
     word = MotGenerator()
-    print(word.generer_mot(7))
+    print(word.generer_mot(7, 4))
 
 if __name__ == '__main__':
     main()
