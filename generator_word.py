@@ -15,7 +15,6 @@ class word_generator:
         return random.choices(self.alphabet, weights=normalise_proba)[0]
 
     def generate_word(self, length_word, nb_words):
-        array_words = []
 
         for _ in range(nb_words):
             word = ""
@@ -34,6 +33,5 @@ class word_generator:
 
             last_letter = self.choose_letter(self.array_proba_fin)
             word += last_letter
-            array_words.append(word)
 
-        return array_words
+        return word
