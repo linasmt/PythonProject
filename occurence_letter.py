@@ -12,15 +12,18 @@ class Occurrence:
         self.array_word = []
         self.alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
                          't', 'u', 'v', 'w', 'x', 'y', 'z', 'é', 'è', 'à', 'ù', 'û', 'ô', 'â', 'î', 'ï', '-', ' ']
+        self.array_proba_debut = []
+        self.array_proba_fin = []
+        self.array_proba_nextletter = []
 
-    def occurrence_letter(self):
+    def get_all_letters(self):
 
         dico = self.dico
         for word in dico:
             for letter in word:
                 if letter.lower() in self.alphabet:
                     self.array_word.append(letter.lower())
-        print(self.get_percentage())
+        return self.array_word
 
     def get_total_letters(self):
         total_letters = 0
@@ -42,14 +45,15 @@ class Occurrence:
                 percentage = 0
             print(f"{letter} : {total_letter} - {percentage:.2f}%")
 
+    def diviser_en_paires(self):
+        paire = self.get_all_letters()
+        length = len(self.array_word)
+        for i in range(length - 1):
+            paire.append((self.array_word[i], self.array_word[i + 1]))
 
-    def split_into_pairs(self):
-        paires = []
-        for i in range(len(self.array_word) - 1):
-            paires.append((self.array_word[i], self.array_word[i + 1]))
-        return paires
+        return paire
 
-    def get_percetage_first_letter(self):
+    def get_percentage_first_letter(self):
         array = []
         for mot in self.dico:
             array.append(mot[0])
@@ -58,11 +62,13 @@ class Occurrence:
             total_letters = len(array)
             if total_letter != 0:
                 percentage = (total_letter / total_letters) * 100
-                print(f"{letter} : {total_letter} - {percentage:.2f}%")
+                self.array_proba_debut.append(round(percentage, 2))
+                # print(f"{letter} : {total_letter} - {percentage:.2f}%")
+        return self.array_proba_debut
 
-
-    def get_percetage_last_letter(self):
+    def get_percentage_last_letter(self):
         array = []
+        array_proba = []
         for mot in self.dico:
             array.append(mot[-1])
         for letter in self.alphabet:
@@ -70,14 +76,20 @@ class Occurrence:
             total_letters = len(array)
             if total_letter != 0:
                 percentage = (total_letter / total_letters) * 100
-                print(f"{letter} : {total_letter} - {percentage:.2f}%")
+                self.array_proba_fin.append(round(percentage, 2))
+        return self.array_proba_fin
+        # print(f"{letter} : {total_letter} - {percentage:.2f}%")
 
-
-    def next_letters(self, paires):
-        array_letters = defaultdict(list)
-        for pair in paires:
-            first_letter, second_letter = pair
-            array_letters[first_letter].append(second_letter)
+    def next_letters(self):
+        paire = self.diviser_en_paires()
+        tableau_lettres = defaultdict(list)
+        for pair in paire:
+            if(len(pair) == 2):
+                first_letter, second_letter = pair
+                tableau_lettres[first_letter].append(second_letter)
+            else:
+                first_letter = pair
+                tableau_lettres[first_letter].append('NaN')
 
         result = {}
         for key, value in array_letters.items():
@@ -85,10 +97,9 @@ class Occurrence:
             total_occurrences = len(value)
             for item in sorted(set(value)):
                 count = value.count(item)
-                percentage = (count / total_occurrences) * 100
-                next_letters_counts.append(f"{count} x '{item}' ({percentage:.2f}%)")
-            result[key] = next_letters_counts
-
+                percentage = round((count / total_occurrences) * 100, 2)
+                lettre_suivante_counts.append(percentage)
+            result[key] = lettre_suivante_counts
         return result
 
 
