@@ -92,14 +92,14 @@ class Occurrence:
                 tableau_lettres[first_letter].append('NaN')
 
         result = {}
-        for key, value in array_letters.items():
+        for key, value in tableau_lettres.items():
             next_letters_counts = []
             total_occurrences = len(value)
             for item in sorted(set(value)):
                 count = value.count(item)
                 percentage = round((count / total_occurrences) * 100, 2)
-                lettre_suivante_counts.append(percentage)
-            result[key] = lettre_suivante_counts
+                next_letters_counts.append(percentage)
+            result[key] = next_letters_counts
         return result
 
 
