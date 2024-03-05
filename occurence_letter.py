@@ -85,14 +85,13 @@ class Occurrence:
             total_occurrences = len(value)
 
             unique_values = sorted(set(value))
-            for item in unique_values:
-                count = value.count(item)
-                percentage = round((count / total_occurrences) * 100, 2)
-                next_letters_counts.append((item, percentage))
-
-            # Ajouter les lettres manquantes avec une probabilité de 0
-            for item in set(self.alphabet) - set(unique_values):
-                next_letters_counts.append(0.0)
+            for letter in self.alphabet:
+                if letter in unique_values:
+                    count = value.count(letter)
+                    percentage = round((count / total_occurrences) * 100, 2)
+                    next_letters_counts.append((letter, percentage))
+                else:
+                    next_letters_counts.append((letter, 0.0))
 
             result[key] = next_letters_counts
 
