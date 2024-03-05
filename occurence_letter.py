@@ -79,14 +79,23 @@ class Occurrence:
                 tableau_lettres[first_letter].append('NaN')
 
         result = {}
+
         for key, value in tableau_lettres.items():
             next_letters_counts = []
             total_occurrences = len(value)
-            for item in sorted(set(value)):
+
+            unique_values = sorted(set(value))
+            for item in unique_values:
                 count = value.count(item)
                 percentage = round((count / total_occurrences) * 100, 2)
-                next_letters_counts.append(percentage)
+                next_letters_counts.append((item, percentage))
+
+            # Ajouter les lettres manquantes avec une probabilité de 0
+            for item in set(self.alphabet) - set(unique_values):
+                next_letters_counts.append(0.0)
+
             result[key] = next_letters_counts
+
         return result
 
 
