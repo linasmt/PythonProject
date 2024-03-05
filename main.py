@@ -1,10 +1,8 @@
-from occurence_letter import Occurrence
-from GeneratorWord import MotGenerator
-from word import Word
+from generator_word import word_generator
 
 def main():
-    word = MotGenerator()
-    print(word.generer_mot(7, 4))
+    word = word_generator()
+    print(word.generate_word(7, 10))
 
 if __name__ == '__main__':
     main()

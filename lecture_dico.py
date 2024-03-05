@@ -1,9 +1,9 @@
 class Dictionnaire:
-    def ouvrir_fichier(self):
+    def open_file(self):
         try:
             with open('liste_francais.txt', 'r') as f:
-                contenu = f.read()
-                mots = contenu.split()
+                content = f.read()
+                mots = content.split()
 
             return mots
         except Exception as e:
